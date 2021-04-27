@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+	body {
+		background-color: #0e0e0e;
+	}
+	
+	#picture {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.menu-container {
+		margin: 0 auto;
+	}
+	
+	form {
+		color: white;
+	}
+	
+	input,
+	label {
+		margin: 10px;
+	}
+	</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Random Perks</title>
+</head>
+
+<body>
+	<img id="picture" src="data:image/png;base64,{{ img_data }}">
+	<div style="width:1200px" class="menu-container">
+		<button onclick="myFunction('menu')" class="w3-btn w3-block w3-black w3-center-align">Menu</button>
+		<div id="menu" class="w3-container w3-hide" align="center">
+			<form action="/testbed/Random-Perks/">
+				<input type="checkbox" class="options" id="char0" name="char0" value="All" checked>
+				<label for="char0" class="options">All Survivors</label>
+				<br>
+				<input type="checkbox" class="options" id="char1" name="char1" value="Dwight Fairfield" checked>
+				<label for="char1" class="options">Dwight Fairfield</label>
+				<br>
+				<input type="submit" value="Submit"> </form>
+		</div>
+	</div>
+	<script>
+	function myFunction(id) {
+		var x = document.getElementById(id);
+		if(x.className.indexOf("w3-show") == -1) {
+			x.className += " w3-show";
+		} else {
+			x.className = x.className.replace(" w3-show", "");
+		}
+	}
+	</script>
+</body>
+
+</html>
