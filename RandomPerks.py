@@ -5,7 +5,7 @@ from PIL import Image, ImageFont, ImageDraw
 app = Flask(__name__)
 
 
-@app.route("/testbed/Random-Perks/")
+@app.route('/testbed/Random-Perks/')
 def index():
     con = sqlite3.connect('perks.db')
     cur = con.cursor()
@@ -13,7 +13,7 @@ def index():
     cur.execute('SELECT * FROM perks')
     size = len(cur.fetchall())
     
-    perk_ids = random.sample(range(size - 1), 4)
+    perk_ids = random.sample(range(size), 4)
     perks = []
     for index, i in enumerate(perk_ids):
         perk_ids[index] = perk_ids[index] + 1
@@ -47,18 +47,18 @@ def index():
         new_im.paste(im, (x_offset, 0))
         x_offset += im.size[0]
         
-    background = Image.open("./images/bg/1.png")
+    background = Image.open('./images/bg/1.png')
     background_w, background_h = background.size
     new_im_w, new_im_h = new_im.size
     offset = ((background_w - new_im_w) // 2, (background_h - new_im_h) // 2)
     background.paste(new_im, offset, new_im)
     buffer = io.BytesIO()
-    background.save(buffer, format="PNG")
+    background.save(buffer, format='PNG')
     encoded_img_data = base64.b64encode(buffer.getvalue())
     
     con.close()
-    return render_template("page.html", img_data=encoded_img_data.decode('utf-8'))
+    return render_template('page.html', img_data=encoded_img_data.decode('utf-8'))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run()
