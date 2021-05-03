@@ -23,7 +23,7 @@ def RipPerks():
     for i in perks_survivors_soup:
         # if perk is for all, set all
         if (i.contents[0] == 'All\n'):
-            perks_survivors.append('All')
+            perks_survivors.append('All Survivors')
         # else if perk is for specific survivor
         elif (i.find('a', attrs={'class': 'mw-redirect'}) is not None):
             # if name is david, set full name (avoid David King/David Tapp collision)
