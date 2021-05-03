@@ -32,25 +32,44 @@
 	<title>Random Perks</title>
 </head>
 
-<body>
+<body onload="createMenu()">
 	<img id="picture" src="data:image/png;base64,{{ img_data }}">
 	<div style="width:1200px" class="menu-container">
 		<button onclick="myFunction('menu')" class="w3-btn w3-block w3-black w3-center-align">Menu</button>
 		<div id="menu" class="w3-container w3-hide" align="center">
-			<form action="/testbed/Random-Perks/">
-				<input type="checkbox" class="options" id="char0" name="char0" value="All" checked>
-				<label for="char0" class="options">All Survivors</label>
-				<br>
-				<input type="checkbox" class="options" id="char1" name="char1" value="Dwight Fairfield" checked>
-				<label for="char1" class="options">Dwight Fairfield</label>
-				<br>
-				<input type="submit" value="Submit"> </form>
+			<form action="/testbed/Random-Perks/"></form>
 		</div>
 	</div>
 	<script>
+	function createMenu() {
+		var form = document.getElementsByTagName("form")[0];
+		var br = document.createElement("br"); 
+		var survivors = {{  survivors_import | tojson | safe }};
+		console.log(survivors);
+		var i;
+		for (i = 0; i < survivors.length; i++) {
+			var box = document.createElement("input");
+			box.setAttribute("type", "checkbox");
+			box.setAttribute("class", "options");
+			box.setAttribute("name", i+1);
+			box.checked = true;
+			var boxLabel = document.createElement("label");
+			boxLabel.setAttribute("for", i+1);
+			boxLabel.setAttribute("class", "options");
+			boxLabel.innerHTML = survivors[i];
+			form.appendChild(box);
+			form.appendChild(boxLabel);
+			form.appendChild(br.cloneNode());
+		}
+		var button = document.createElement("input");
+		button.setAttribute("type", "submit");
+		button.setAttribute("value", "Submit");
+		form.appendChild(button);
+	}
+	
 	function myFunction(id) {
 		var x = document.getElementById(id);
-		if(x.className.indexOf("w3-show") == -1) {
+		if(x.className.indexOf("w3-show") === -1) {
 			x.className += " w3-show";
 		} else {
 			x.className = x.className.replace(" w3-show", "");
