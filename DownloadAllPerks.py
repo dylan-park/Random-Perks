@@ -52,15 +52,20 @@ def RipPerks():
     
     # download each image link to the hard drive
     counter = 0
-    perksfile = open('perks.txt', 'a')
     for i in images:
-        urllib.request.urlretrieve(i, './images/perks/' + filenames[counter])
-        perksfile.write(perks[counter] + '\n')
+        urllib.request.urlretrieve(i, './static/images/perks/' + filenames[counter])
         counter += 1
+        
+    # download char portraits
+    for index, i in enumerate(survivors):
+        if (index > 0):
+            soup_image = BeautifulSoup(requests.get('https://deadbydaylight.fandom.com/wiki/File:S' + '{0:0=2d}'.format(index) + '_charSelect_portrait.png').content, 'html.parser')
+            div = soup_image.find(class_='fullMedia')
+            urllib.request.urlretrieve(div.find('a').get('href'), './static/images/survivors/' + str(index) + '.png')
 
 
 def BuildPerks():
-    directory = os.fsencode('./images/perks/')
+    directory = os.fsencode('./static/images/perks/')
     for file in os.listdir(directory):
         path = os.path.join(directory, file)
         if os.path.isdir(path):
@@ -68,9 +73,9 @@ def BuildPerks():
             continue
         filename = os.fsdecode(file)
     
-        background = Image.open('./images/very_rare.png')
+        background = Image.open('./static/images/very_rare.png')
         background_w, background_h = background.size
-        overlay = Image.open('./images/perks/' + filename)
+        overlay = Image.open('./static/images/perks/' + filename)
         overlay_w, overlay_h = overlay.size
         
         background = background.convert('RGBA')
@@ -78,7 +83,7 @@ def BuildPerks():
         offset = ((background_w - overlay_w) // 2, (background_h - overlay_h) // 2)
         
         background.paste(overlay, offset, overlay)
-        background.save('./images/perks/new/' + filename)
+        background.save('./static/images/perks/new/' + filename)
         
         background.close()
         overlay.close()
@@ -103,5 +108,5 @@ def FillDatabase():
     
     
 RipPerks()
-BuildPerks()
-FillDatabase()
+# BuildPerks()
+# FillDatabase()

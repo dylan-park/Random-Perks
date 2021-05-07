@@ -2,7 +2,7 @@ import sqlite3, random, base64, io
 from flask import Flask, render_template, request
 from PIL import Image, ImageFont, ImageDraw
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/testbed/Random-Perks/static", static_folder="static")
 
 
 @app.route('/testbed/Random-Perks/')
@@ -45,10 +45,10 @@ def index():
     print(rows)
     
     # set the 4 perk images
-    perk_1 = './images/perks/new/' + rows[0][0]
-    perk_2 = './images/perks/new/' + rows[1][0]
-    perk_3 = './images/perks/new/' + rows[2][0]
-    perk_4 = './images/perks/new/' + rows[3][0]
+    perk_1 = './static/images/perks/new/' + rows[0][0]
+    perk_2 = './static/images/perks/new/' + rows[1][0]
+    perk_3 = './static/images/perks/new/' + rows[2][0]
+    perk_4 = './static/images/perks/new/' + rows[3][0]
     images = [Image.open(x) for x in [perk_1, perk_2, perk_3, perk_4]]
     
     # draw perk names on perk images
@@ -72,7 +72,7 @@ def index():
         x_offset += im.size[0]
         
     # apply images over background and prepare to handoff to html
-    background = Image.open('./images/bg/1.png')
+    background = Image.open('./static/images/bg/1.png')
     background_w, background_h = background.size
     new_im_w, new_im_h = new_im.size
     offset = ((background_w - new_im_w) // 2, (background_h - new_im_h) // 2)
