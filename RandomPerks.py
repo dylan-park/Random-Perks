@@ -23,6 +23,8 @@ def index():
     if not query:
         perk_ids = [*cur.execute('SELECT perkID FROM perks').fetchall()]
         perk_ids = list(sum(perk_ids, ()))
+        # if query is empty, fill with all survivors for page menu saving
+        query = list(range(1, len(survivors) + 1))
     # else get specific survivor perks
     else:
         text = ''
@@ -79,9 +81,12 @@ def index():
     background.save(buffer, format='PNG')
     encoded_img_data = base64.b64encode(buffer.getvalue())
     
+    # convert query to int for ease of computation
+    query = [int(i) for i in query]
+    
     # close sqlite connection and handoff image to html
     con.close()
-    return render_template('page.html', survivors_import=survivors, img_data=encoded_img_data.decode('utf-8'))
+    return render_template('page.html', survivors_import=survivors, query_import=list(query), img_data=encoded_img_data.decode('utf-8'))
 
 
 if __name__ == '__main__':

@@ -45,14 +45,19 @@
 		var form = document.getElementsByTagName("form")[0];
 		var br = document.createElement("br"); 
 		var survivors = {{  survivors_import | tojson | safe }};
-		console.log(survivors);
+		var query = {{  query_import | tojson | safe }};
+		console.log(query)
 		var i;
 		for (i = 0; i < survivors.length; i++) {
 			var box = document.createElement("input");
 			box.setAttribute("type", "checkbox");
 			box.setAttribute("class", "options");
 			box.setAttribute("name", i+1);
-			box.checked = true;
+			if (query.includes(i+1)) {
+				box.checked = true;
+			} else {
+				box.checked = false;
+			}
 			var boxLabel = document.createElement("label");
 			boxLabel.setAttribute("for", i+1);
 			boxLabel.setAttribute("class", "options");
