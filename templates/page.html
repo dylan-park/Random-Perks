@@ -96,6 +96,29 @@
 		animation-duration: 0.5s;
 		animation-fill-mode: forwards
 	}
+	
+	.button {
+		background-color: #202020;
+		border-radius: 6px;
+		display: inline-block;
+		cursor: pointer;
+		color: white;
+		font-size: 15px;
+		font-weight: bold;
+		padding: 6px 24px;
+		text-decoration: none;
+		text-shadow: 0px 1px 0px #ffffff;
+		margin: 10px;
+	}
+	
+	.button:hover {
+		background-color:#303030;
+	}
+	
+	.button:active {
+		position:relative;
+		top:1px;
+	}
 	</style>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,10 +130,14 @@
 	<div class="menu-container">
 		<button class="accordion">Menu</button>
 		<div class="panel">
+			<label class = "button">
+				<input type="checkbox" class="select-all" checked><span>Select/Deselect All</span>
+			</label>
 			<form action="/testbed/Random-Perks/"></form>
 		</div>
 	</div>
 	<script>
+	// Accordian code
 	var acc = document.getElementsByClassName("accordion");
 	var i;
 
@@ -121,6 +148,17 @@
 		}
 	}
 	
+	// Select/Deselect all code
+	document.getElementsByClassName("select-all")[0].onclick = function() {
+		var checkboxes = document.getElementsByTagName("input");
+		for (var checkbox of checkboxes) {
+			if (checkbox.type == "checkbox") {
+				checkbox.checked = this.checked;
+			}
+		}
+	}
+	
+	// Create menu buttons
 	function createMenu() {
 		var form = document.getElementsByTagName("form")[0];
 		var tbl = document.createElement('table');
@@ -162,7 +200,7 @@
 		form.appendChild(tbl)
 		var button = document.createElement("input");
 		button.setAttribute("type", "submit");
-		button.setAttribute("class", "submit");
+		button.setAttribute("class", "button");
 		button.setAttribute("value", "Submit");
 		form.appendChild(button);
 	}
